@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="listen">start</button><br />
+    <script>
+        const { ipcRenderer } = require('electron')
+        ipcRenderer.send('asynchronous-message', 'ping')
+        ipcRenderer.on('asynchronous-reply', (event, arg) => {
+            console.log(arg)
+        })
+        const listen = document.querySelector("#listen")
+        listen.onclick = () => {
+            if (listen.textContent == 'start') {
+                listen.textContent = 'stop'
+                ipcRenderer.send("start")
+            }
+            else {
+                listen.textContent = 'start'
+                ipcRenderer.send("stop")
+            }
+        }
+    </script>
+</body>
+
+</html>
