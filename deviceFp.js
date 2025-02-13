@@ -1,3 +1,28 @@
+function base64Decrypt(encoded) {
+    var n = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_*";
+    var output = [];
+
+    for (var i = 0; i < encoded.length; i += 4) {
+        var a = n.indexOf(encoded.charAt(i));
+        var b = n.indexOf(encoded.charAt(i + 1));
+        var c = n.indexOf(encoded.charAt(i + 2));
+        var d = n.indexOf(encoded.charAt(i + 3));
+        var buffer = [];
+        buffer[0] = (a << 2) | (b >> 4);
+        buffer[1] = ((b & 15) << 4) | (c >> 2);
+        buffer[2] = ((c & 3) << 6) | d;
+
+        if (c === 64) {
+            buffer = buffer.slice(0, 1);
+        } else if (d === 64) {
+            buffer = buffer.slice(0, 2);
+        }
+        output.push(...buffer);
+    }
+
+    return output;
+}
+
 function base64Encrypt(t) {
     var e = function (t) {
         for (var e = "", n = 0; n < t.length; n++)

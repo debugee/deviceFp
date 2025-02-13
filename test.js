@@ -1,4 +1,5 @@
 const deviceFP = require("./deviceFp")
+const DeviceFpBehavior = require("./DeviceFpBehavior")
 const http = require('http');
 
 const port = 3000;
@@ -27,6 +28,12 @@ const server = http.createServer((req, res) => {
                 resp.fp = fp.toString()
                 resp.result = "successed"
             }
+        else if (o.m == "getDeviceFpBehavior")
+          {
+            var fp = DeviceFpBehavior.getDeviceFpBehavior(o.sessionID, o.pageUrl)
+            resp.fp = fp.toString()
+            resp.result = "successed"
+          }
         }
     }catch(e){
         console.log(Date().toString() + post)
